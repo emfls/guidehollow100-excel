@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import site from '../site.json';
+import ads from '../config/monetization.json';
+---
+<Layout title={'Advertising disclosure | '+site.title} description={'Advertising and affiliate policy for '+site.title}>
+<div class="wrap content"><p class="eyebrow">TRANSPARENCY</p><h1>Advertising and affiliate disclosure</h1>
+<p>Reserved advertising placements do not mean ads are active. AdSense and Coupang Partners links are currently disabled.</p>
+{ads.coupang.enabled&&site.launchReady&&<p>Some links may be affiliate advertisements. We may earn a commission from qualifying purchases at no extra cost to you. Paid placements are clearly labelled.</p>}
+<h2>Independent editorial decisions</h2><p>Articles should answer questions accurately regardless of advertising. Affiliate product banners must be relevant to the page, verified and approved before they appear.</p>
+<h2>Ad placement rules</h2><p>Advertisements and sponsored links are kept separate from navigation, downloads and instructions. There is no encouragement to click advertising.</p>
+<h2>Data and privacy</h2><p>Third-party scripts remain disabled until configured, and the <a href="/privacy/">privacy notice</a> and consent requirements must be updated before activation.</p>
+</div></Layout>

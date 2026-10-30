@@ -1,0 +1,29 @@
+{
+  "adsense": {
+    "enabled": false,
+    "client": "",
+    "slots": {
+      "home-after-topics": "",
+      "guides-bottom": "",
+      "article-after-intro": "",
+      "article-after-content": ""
+    }
+  },
+  "coupang": {
+    "enabled": false,
+    "banners": {
+      "home-after-guides": {
+        "approved": false,
+        "url": "",
+        "imageUrl": "",
+        "alt": ""
+      },
+      "article-after-content": {
+        "approved": false,
+        "url": "",
+        "imageUrl": "",
+        "alt": ""
+      }
+    }
+  }
+}

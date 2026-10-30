@@ -1,15 +1,28 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Ad from '../../components/AdPlacement.astro';
 import site from '../../site.json';
 import {getCollection,render} from 'astro:content';
 export async function getStaticPaths(){
  const s=(await import('../../site.json')).default;
- const posts=await getCollection('guides',({data})=>s.launchReady&&!data.draft&&data.reviewed);
+ const posts=await getCollection('guides',({data})=>s.launchReady&&!data.draft&&data.reviewed&&data.sources.length>0);
  return posts.map(p=>({params:{slug:p.id},props:{post:p}}));
 }
 const {post}=Astro.props;
-const {Content}=await render(post);
+const {Content,headings}=await render(post);
+const toc=headings.filter(h=>h.depth===2).slice(0,15);
+const crumbsJson=JSON.stringify({'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[
+{'@type':'ListItem',position:1,name:'Home',item:site.url},
+{'@type':'ListItem',position:2,name:'Guides',item:new URL('/guides/',site.url).href},
+{'@type':'ListItem',position:3,name:post.data.title,item:new URL('/guides/'+post.id+'/',site.url).href}
+]}).replace(/</g,'\\u003c');
 ---
-<Layout title={post.data.title+' | '+site.title} description={post.data.description}>
-<article class="wrap content"><p class="eyebrow">{site.short} / {post.data.category}</p><h1>{post.data.title}</h1><p class="meta">Published {post.data.pubDate.toLocaleDateString('en-US')}</p><p class="lead">{post.data.description}</p><Content/><hr/><p class="meta">Check software and device compatibility before making changes. <a href="/editorial/">Editorial policy</a>.</p><a href="/guides/">All guides</a></article>
+<Layout title={post.data.title+' | '+site.title} description={post.data.description} article={true} publishedAt={post.data.pubDate} updatedAt={post.data.updatedDate} sourceUrls={post.data.sources}>
+<article class="wrap content"><nav aria-label="Breadcrumb" class="breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/guides/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">{post.data.category}</span></nav><p class="eyebrow">{site.short} / {post.data.category}</p><h1>{post.data.title}</h1><p class="meta">Published {post.data.pubDate.toLocaleDateString('en-US')}</p><p class="lead">{post.data.description}</p>
+{toc.length>1&&<nav class="contents-nav" aria-label="On this page"><strong>In this guide</strong><ul>{toc.map(h=><li><a href={'#'+h.slug}>{h.text}</a></li>)}</ul></nav>}
+<Ad network="adsense" placement="article-after-intro"/>
+<Content/>
+<h2>References</h2><ul class="source-links">{post.data.sources.map(url=><li><a href={url} target="_blank" rel="noopener noreferrer">{url}</a></li>)}</ul>
+<Ad network="adsense" placement="article-after-content"/>
+<Ad network="coupang" placement="article-after-content"/><hr/><p class="meta">Check software and device compatibility before making changes. <a href="/editorial/">Editorial policy</a>.</p><a href="/guides/">All guides</a></article><script type="application/ld+json" set:html={crumbsJson}/>
 </Layout>
