@@ -1,18 +1,20 @@
 {
-  "title": "GuideHollow Excel",
+  "title": "GuideHollow",
   "slug": "excel",
-  "short": "Excel",
-  "hero": "Understand the formula. Trust the result.",
-  "description": "Practical Excel formulas, spreadsheet errors and data checking.",
+  "short": "엑셀",
+  "hero": "엑셀 계산과 데이터 오류, 하나씩 확인하면 해결할 수 있습니다.",
+  "description": "XLOOKUP과 함수 오류, 자동 계산, 중복 데이터 정리와 차트 작업을 단계별로 정리합니다.",
   "accent": "#128066",
   "topics": [
-    "Formula errors",
-    "Lookups",
-    "Calculation",
-    "Data cleaning",
-    "Charts",
-    "Workbook checks"
+    "함수·수식 오류",
+    "조회 함수·XLOOKUP",
+    "자동 계산 설정",
+    "중복·공백 데이터 정리",
+    "표·차트 만들기",
+    "파일 검증·업무 활용"
   ],
   "url": "https://excel.guidehollow.com/",
-  "launchReady": false
+  "launchReady": false,
+  "section": "엑셀 함수·데이터 활용",
+  "pageTitle": "엑셀 함수·오류 해결 가이드 | GuideHollow"
 }

@@ -1,0 +1,1 @@
+html{word-break:keep-all}p,li,h1,h2,h3{overflow-wrap:anywhere}.brand{white-space:nowrap}.hero h1{letter-spacing:-.035em;line-height:1.22}.eyebrow{letter-spacing:.03em}.topic h3{line-height:1.45}.content h1{line-height:1.32}.content h2{line-height:1.4}.content h3{line-height:1.4}@media(max-width:480px){.hero h1{font-size:clamp(30px,8vw,40px)}}

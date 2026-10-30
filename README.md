@@ -1,19 +1,11 @@
-# GuideHollow Excel
+# GuideHollow · 엑셀
 
-Independent GuideHollow 100 static blog. Other GuideHollow repositories are not used.
+이 저장소는 한국어 엑셀 함수·데이터 활용 블로그입니다.
 
-## Run
+- 실행: `npm install`, `npm run dev`, `npm run build`
+- 한국어 글만 게시: `language: ko`, `reviewed: true`, `draft: false` 및 출처 필요
+- `launchReady: false` 상태에서 색인·글·광고 공개 차단
+- 쿠팡 다이나믹 배너 2개 설정 및 애드센스 자동 광고 비활성화
+- GitHub Pages, DNS, HTTPS 확인 후 공개 설정 변경
 
-    npm install
-    npm run dev
-    npm run build
-
-## Deploy
-1. Configure Settings > Pages > Source: GitHub Actions.
-2. Add the custom domain excel.guidehollow.com in GitHub Pages settings and configure Gabia DNS CNAME to the GitHub Pages hostname.
-3. Verify Pages deployment, SSL, domain and content QA.
-4. Set launchReady to true in src/site.json only after approval.
-
-## Editorial gate
-Guides live under src/content/guides/*.md. Both reviewed: true and draft: false are required, and the site must have launchReady: true.
-Notion drafts are NOT imported automatically; no existing publisher is connected.
+기존 GuideHollow 운영 저장소와 별개로 관리합니다.

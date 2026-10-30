@@ -10,8 +10,8 @@ const show=site.launchReady&&ads.coupang.enabled&&banner?.enabled===true&&banner
 const options={id,template:banner?.template||'carousel',trackingCode,width:String(banner?.width||'680'),height:String(banner?.height||'140'),tsource:String(banner?.tsource||'')};
 const widgetCode='new PartnersCoupang.G('+JSON.stringify(options).replace(/</g,'\\u003c')+');';
 ---
-{show?<aside class="ad-placement dynamic-banner" aria-label="Coupang Partners advertisement">
-<p class="ad-label">Advertisement · Coupang Partners</p>
+{show?<aside class="ad-placement dynamic-banner" aria-label="쿠팡파트너스 광고">
+<p class="ad-label">광고 · 쿠팡파트너스</p>
 <div class="dynamic-banner-frame"><script is:inline set:html={widgetCode}/></div>
-<p class="ad-small">This website participates in Coupang Partners and receives a commission from qualifying purchases. 이 사이트는 쿠팡 파트너스 활동의 일환으로 이에 따른 일정액의 수수료를 제공받습니다. <a href="/disclosure/">Advertising disclosure</a>.</p>
+<p class="ad-small">이 사이트는 쿠팡 파트너스 활동의 일환으로 이에 따른 일정액의 수수료를 제공받습니다. <a href="/disclosure/">광고·제휴 안내</a></p>
 </aside>:<template data-reserved-network="coupang" data-reserved-placement={placement}></template>}

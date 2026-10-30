@@ -3,31 +3,33 @@ import site from '../site.json';
 import ads from '../config/monetization.json';
 import '../styles/monetization.css';
 import '../styles/base.css';
-const {title=site.title,description=site.description,article=false,publishedAt,updatedAt,sourceUrls=[]}=Astro.props;
-const org={'@type':'Organization',name:site.title,url:site.url};
-const schema=article?{'@context':'https://schema.org','@type':'BlogPosting',headline:title,description,inLanguage:'en',mainEntityOfPage:{'@type':'WebPage','@id':new URL(Astro.url.pathname,site.url).href},author:org,publisher:org,datePublished:publishedAt?.toISOString(),dateModified:(updatedAt||publishedAt)?.toISOString(),...(sourceUrls.length?{citation:sourceUrls}:{})}:{'@context':'https://schema.org','@type':'WebSite',name:site.title,url:site.url,description:site.description,inLanguage:'en',publisher:org};
+import '../styles/korean.css';
+const {title=site.pageTitle,description=site.description,article=false,publishedAt,updatedAt,sourceUrls=[]}=Astro.props;
+const canonical=new URL(Astro.url.pathname,site.url).href;
+const org={'@type':'Organization',name:'GuideHollow',url:site.url};
+const schema=article?{'@context':'https://schema.org','@type':'BlogPosting',headline:title,description,inLanguage:'ko-KR',mainEntityOfPage:{'@type':'WebPage','@id':canonical},author:org,publisher:org,datePublished:publishedAt?.toISOString(),dateModified:(updatedAt||publishedAt)?.toISOString(),...(sourceUrls.length?{citation:sourceUrls}:{})}:{'@context':'https://schema.org','@type':'WebSite',name:'GuideHollow',url:site.url,description:site.description,inLanguage:'ko-KR',publisher:org};
 const schemaJson=JSON.stringify(schema).replace(/</g,'\\u003c');
 const loadAds=site.launchReady&&ads.adsense.mode==='auto'&&ads.adsense.enabled&&/^ca-pub-\d{16}$/.test(ads.adsense.client);
 const loadCoupang=site.launchReady&&ads.coupang.enabled&&Object.values(ads.coupang.dynamicBanners).some(b=>b.enabled&&b.mode==='script'&&Number.isSafeInteger(Number(b.id))&&Number(b.id)>0&&/^AF[A-Za-z0-9_-]{3,30}$/.test(String(b.trackingCode||'')));
-const canonical=new URL(Astro.url.pathname,site.url).href;
 ---
-<!doctype html><html lang="en"><head>
+<!doctype html><html lang="ko"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>{title}</title><meta name="description" content={description}/>
-<meta name="robots" content={site.launchReady?'index,follow,max-image-preview:large':'noindex,nofollow'}/>
-<meta property="og:type" content={article?"article":"website"}/><meta property="og:title" content={title}/><meta property="og:description" content={description}/>
-<link rel="canonical" href={canonical}/><link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
-<link rel="alternate" type="application/rss+xml" href="/rss.xml" title={site.title+' RSS'}/>
+<title>{title}</title><meta name="description" content={description}/><meta name="robots" content={site.launchReady?'index,follow,max-image-preview:large':'noindex,nofollow'}/>
+<meta property="og:locale" content="ko_KR"/><meta property="og:type" content={article?'article':'website'}/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:site_name" content="GuideHollow"/><meta property="og:url" content={canonical}/>
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content={title}/><meta name="twitter:description" content={description}/>
-<meta property="og:site_name" content={site.title}/><meta property="og:url" content={canonical}/>
+<link rel="canonical" href={canonical}/><link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+<link rel="alternate" type="application/rss+xml" href="/rss.xml" title="GuideHollow RSS"/>
 {publishedAt&&<meta property="article:published_time" content={publishedAt.toISOString()}/>}
 {(updatedAt||publishedAt)&&<meta property="article:modified_time" content={(updatedAt||publishedAt).toISOString()}/>}
 <script type="application/ld+json" set:html={schemaJson}/>
 {loadAds&&<script is:inline async src={'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client='+ads.adsense.client} crossorigin="anonymous"></script>}
 {loadCoupang&&<script is:inline src="https://ads-partners.coupang.com/g.js"></script>}
 </head><body style={'--accent:'+site.accent}>
-<a href="#main" class="skip">Skip to content</a>
-<header><div class="wrap head"><a class="brand" href="/"><span class="logo">G</span>GuideHollow <strong>{site.short}</strong></a><nav aria-label="Main"><a href="/">Home</a><a href="/guides/">Guides</a><a href="/about/">About</a><a href="/editorial/">Editorial</a></nav></div></header>
+<a href="#main" class="skip">본문으로 바로가기</a>
+<header><div class="wrap head"><a class="brand" href="/" aria-label="GuideHollow 홈"><span class="logo" aria-hidden="true">G</span>GuideHollow</a>
+<nav aria-label="주요 메뉴"><a href="/">홈</a><a href="/guides/">가이드</a><a href="/about/">소개</a><a href="/editorial/">편집 원칙</a></nav></div></header>
 <main id="main"><slot/></main>
-<footer><div class="wrap"><strong>{site.title}</strong><p>Practical help. Checked before publication.</p><nav aria-label="Footer"><a href="/about/">About</a><a href="/editorial/">Editorial</a><a href="/privacy/">Privacy</a><a href="/disclosure/">Advertising disclosure</a></nav><p class="small">© {new Date().getFullYear()} GuideHollow 100 · Not affiliated with manufacturers.</p></div></footer>
+<footer><div class="wrap"><strong>GuideHollow</strong><p>필요한 정보를 쉽게 찾고, 안전하게 확인할 수 있도록 돕습니다.</p>
+<nav aria-label="하단 메뉴"><a href="/about/">사이트 소개</a><a href="/editorial/">편집 원칙</a><a href="/privacy/">개인정보 안내</a><a href="/disclosure/">광고·제휴 안내</a></nav>
+<p class="small">© {new Date().getFullYear()} GuideHollow · 각 서비스·제품 제조사의 공식 고객센터가 아닙니다.</p></div></footer>
 </body></html>

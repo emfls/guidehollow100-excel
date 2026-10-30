@@ -4,10 +4,10 @@ import site from '../site.json';
 import ads from '../config/monetization.json';
 const live=site.launchReady&&ads.coupang.enabled&&Object.values(ads.coupang.dynamicBanners).some(b=>b.enabled);
 ---
-<Layout title={'Advertising disclosure | '+site.title} description={'Advertising and affiliate policy for '+site.title}>
-<div class="wrap content"><p class="eyebrow">TRANSPARENCY</p><h1>Advertising and affiliate disclosure</h1>
-{live?<p><strong>Affiliate advertisement:</strong> this website participates in Coupang Partners and receives a commission from qualifying purchases through Coupang dynamic banners. 이 사이트는 쿠팡 파트너스 활동의 일환으로 이에 따른 일정액의 수수료를 제공받습니다.</p>:<p>Coupang Partners dynamic banner placements have been prepared, but they are not active. Google AdSense is disabled until separately approved and configured.</p>}
-<h2>Independent editorial decisions</h2><p>Editorial answers are independent of monetization. Dynamic banners show products served by Coupang and are sponsored content, not verified individual product recommendations by this site.</p>
-<h2>Placement and labelling</h2><p>Sponsored banners are labelled advertisements and kept separate from navigation and troubleshooting instructions. Products are not selected or linked individually by this site.</p>
-<h2>Data and privacy</h2><p>External advertising scripts are not loaded while disabled. When enabled, Coupang may process information under its own privacy policies. Review our <a href="/privacy/">privacy notice</a> and applicable consent requirements before activation.</p>
-</div></Layout>
+<Layout title="광고·제휴 안내 | GuideHollow" description="GuideHollow의 광고 표기와 쿠팡파트너스 제휴 수익에 관한 안내입니다.">
+<div class="wrap content"><p class="eyebrow">GuideHollow / 광고·제휴 안내</p><h1>광고·제휴 안내</h1>
+{live?<p><strong>제휴 광고 안내:</strong> 이 사이트는 쿠팡 파트너스 활동의 일환으로 이에 따른 일정액의 수수료를 제공받습니다.</p>:<p>쿠팡파트너스 다이나믹 배너를 연결할 수 있도록 준비했으나, 아직 공개 광고는 활성화하지 않았습니다. Google 애드센스도 심사 승인 전까지 비활성화합니다.</p>}
+<h2>광고 상품과 편집 내용은 별개입니다</h2><p>쿠팡 다이나믹 배너에 나타나는 상품은 쿠팡에서 자동으로 구성하며, GuideHollow가 개별 상품의 성능이나 적합성을 검증·추천한 것은 아닙니다.</p>
+<h2>광고 표시 원칙</h2><p>광고를 메뉴, 다운로드 버튼 또는 문제 해결 단계와 혼동하지 않도록 구분해 표시합니다.</p>
+<h2>개인정보 관련 안내</h2><p>광고 제공 시 외부 스크립트가 사용될 수 있습니다. 실제 공개 전 <a href="/privacy/">개인정보 안내</a>와 적용되는 쿠키·동의 요구사항을 확인합니다.</p></div>
+</Layout>

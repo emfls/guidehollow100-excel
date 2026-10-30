@@ -2,5 +2,11 @@
 import Layout from '../layouts/Layout.astro';
 import site from '../site.json';
 ---
-<Layout title={'About | '+site.title} description={site.description}>
-<div class="wrap content"><p class="eyebrow">ABOUT</p><h1>Practical help without the guesswork</h1><p><strong>{site.title}</strong> is an independent topic-focused GuideHollow 100 website.</p><p>{site.description}</p><p>Our guides focus on what to check first, risks of each action and how to confirm an issue is fixed.</p><h2>Not official support</h2><p>We are not affiliated with any software, platform or device manufacturer. Follow official sources and workplace policies for sensitive changes.</p></div></Layout>
+<Layout title={'사이트 소개 | GuideHollow'} description={site.description}>
+<div class="wrap content"><p class="eyebrow">GuideHollow / 소개</p><h1>필요한 답을 찾기 쉬운 기술 가이드</h1>
+<p><strong>GuideHollow</strong>는 일상에서 겪는 기술 문제를 단계별로 정리하는 독립 정보 사이트입니다. 이 사이트에서는 <strong>{site.section}</strong>을 중심으로 안내합니다.</p>
+<p>{site.description}</p>
+<h2>정보를 제공하는 방식</h2><p>먼저 확인할 내용과 원인을 좁히는 방법, 설정을 변경할 때 주의할 점, 문제가 해결됐는지 확인하는 절차를 구분합니다.</p>
+<h2>공식 고객센터가 아닙니다</h2><p>GuideHollow는 제품 제조사나 서비스 제공사의 공식 지원 사이트가 아닙니다. 계정·개인정보·데이터 삭제처럼 위험할 수 있는 작업은 공식 문서와 소속 조직의 지침을 먼저 확인하세요.</p>
+<p><a href="/editorial/">원고 검수 기준 살펴보기</a></p></div>
+</Layout>

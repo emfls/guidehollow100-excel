@@ -5,25 +5,29 @@ import site from '../../site.json';
 import {getCollection,render} from 'astro:content';
 export async function getStaticPaths(){
  const s=(await import('../../site.json')).default;
- const posts=await getCollection('guides',({data})=>s.launchReady&&!data.draft&&data.reviewed&&data.sources.length>0);
+ const posts=await getCollection('guides',({data})=>s.launchReady&&!data.draft&&data.reviewed&&data.language==='ko'&&data.sources.length>0);
  return posts.map(p=>({params:{slug:p.id},props:{post:p}}));
 }
 const {post}=Astro.props;
 const {Content,headings}=await render(post);
 const toc=headings.filter(h=>h.depth===2).slice(0,15);
+const formatDate=(date)=>new Intl.DateTimeFormat('ko-KR',{dateStyle:'long',timeZone:'Asia/Seoul'}).format(date);
 const crumbsJson=JSON.stringify({'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[
-{'@type':'ListItem',position:1,name:'Home',item:site.url},
-{'@type':'ListItem',position:2,name:'Guides',item:new URL('/guides/',site.url).href},
-{'@type':'ListItem',position:3,name:post.data.title,item:new URL('/guides/'+post.id+'/',site.url).href}
+ {'@type':'ListItem',position:1,name:'홈',item:site.url},
+ {'@type':'ListItem',position:2,name:'가이드',item:new URL('/guides/',site.url).href},
+ {'@type':'ListItem',position:3,name:post.data.title,item:new URL('/guides/'+post.id+'/',site.url).href}
 ]}).replace(/</g,'\\u003c');
 ---
-<Layout title={post.data.title+' | '+site.title} description={post.data.description} article={true} publishedAt={post.data.pubDate} updatedAt={post.data.updatedDate} sourceUrls={post.data.sources}>
-<article class="wrap content"><nav aria-label="Breadcrumb" class="breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/guides/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">{post.data.title}</span></nav><p class="eyebrow">{site.short} / {post.data.category}</p><h1>{post.data.title}</h1><p class="meta">Published {post.data.pubDate.toLocaleDateString('en-US')}</p><p class="lead">{post.data.description}</p>
-{toc.length>1&&<nav class="contents-nav" aria-label="On this page"><strong>In this guide</strong><ul>{toc.map(h=><li><a href={'#'+h.slug}>{h.text}</a></li>)}</ul></nav>}
-
+<Layout title={post.data.title+' | GuideHollow'} description={post.data.description} article={true} publishedAt={post.data.pubDate} updatedAt={post.data.updatedDate} sourceUrls={post.data.sources}>
+<article class="wrap content"><nav aria-label="현재 위치" class="breadcrumbs"><a href="/">홈</a><span aria-hidden="true">/</span><a href="/guides/">가이드</a><span aria-hidden="true">/</span><span aria-current="page">{post.data.title}</span></nav>
+<p class="eyebrow">{site.short} / {post.data.category}</p><h1>{post.data.title}</h1>
+<p class="meta">작성일 <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>{post.data.updatedDate&&<> · 수정일 <time datetime={post.data.updatedDate.toISOString()}>{formatDate(post.data.updatedDate)}</time></>}</p>
+<p class="lead">{post.data.description}</p>
+{toc.length>1&&<nav class="contents-nav" aria-label="이 글의 목차"><strong>이 글의 목차</strong><ul>{toc.map(h=><li><a href={'#'+h.slug}>{h.text}</a></li>)}</ul></nav>}
 <Content/>
 <Ad placement="article-after-guide"/>
-<h2>References</h2><ul class="source-links">{post.data.sources.map(url=><li><a href={url} target="_blank" rel="noopener noreferrer">{url}</a></li>)}</ul>
-
-<hr/><p class="meta">Check software and device compatibility before making changes. <a href="/editorial/">Editorial policy</a>.</p><a href="/guides/">All guides</a></article><script type="application/ld+json" set:html={crumbsJson}/>
+<h2>참고 자료</h2><ul class="source-links">{post.data.sources.map(url=><li><a href={url} target="_blank" rel="noopener noreferrer">{url}</a></li>)}</ul>
+<hr/><p class="meta">환경과 버전에 따라 해결 방법이 달라질 수 있습니다. <a href="/editorial/">편집 원칙</a>을 참고하세요.</p>
+<a href="/guides/">← 가이드 목록으로</a>
+</article><script type="application/ld+json" set:html={crumbsJson}/>
 </Layout>

@@ -2,14 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import site from '../site.json';
 import ads from '../config/monetization.json';
-const live=site.launchReady&&ads.coupang.enabled&&Object.values(ads.coupang.dynamicBanners).some(b=>b.enabled);
+const coupangLive=site.launchReady&&ads.coupang.enabled&&Object.values(ads.coupang.dynamicBanners).some(b=>b.enabled);
 ---
-<Layout title={'Privacy | '+site.title} description={'Privacy information for '+site.title}>
-<div class="wrap content"><p class="eyebrow">PRIVACY</p><h1>Privacy notice</h1>
-<p>Reviewed: 30 October 2026. This static information website has no user accounts or comment form.</p>
-<h2>Hosting and external links</h2><p>The host may process technical request data such as IP addresses, timestamps and request headers. External documentation websites have their own privacy notices.</p>
-<h2>Affiliate advertising</h2>
-{live?<p>Coupang Partners dynamic ads are configured. Third-party code may load recommended products and process information under Coupang's policies. Relevant cookie and consent requirements must be assessed for visitors before activation.</p>:<p>Coupang Partners dynamic banners and Google AdSense scripts are disabled until configured and the relevant privacy and consent requirements are completed.</p>}
-<p>Read our <a href="/disclosure/">advertising disclosure</a>.</p>
-<h2>Changes</h2><p>This policy must be revised if analytics, advertising, cookies, embeds or forms are introduced or changed.</p></div>
-</Layout>
+<Layout title="개인정보 안내 | GuideHollow" description="GuideHollow의 개인정보 및 외부 광고 서비스에 관한 안내입니다.">
+<div class="wrap content"><p class="eyebrow">GuideHollow / 개인정보 안내</p><h1>개인정보 안내</h1>
+<p>최종 검토일: 2026년 10월 30일. 이 사이트는 회원가입이나 댓글 작성 기능이 없는 정적 정보 사이트입니다.</p>
+<h2>사이트 접속 정보</h2><p>호스팅 서비스는 페이지 제공과 보안 목적으로 IP 주소, 요청 시각, 브라우저 정보와 같은 접속 기록을 처리할 수 있습니다. 상세 내용은 해당 호스팅 서비스의 개인정보 처리방침을 확인하세요.</p>
+<h2>광고 및 외부 서비스</h2>
+{coupangLive?<p>쿠팡파트너스 다이나믹 배너가 설정되어 있으며, 광고 제공에 필요한 외부 스크립트가 실행될 수 있습니다. 관련 정보 처리 및 쿠키 이용은 쿠팡의 정책과 적용되는 동의 요건을 확인해야 합니다.</p>:<p>쿠팡파트너스 배너와 Google 애드센스 광고 스크립트는 현재 사이트의 공개 조건이 충족되지 않아 실행되지 않습니다.</p>}
+<p>자세한 제휴 관계는 <a href="/disclosure/">광고·제휴 안내</a>를 참고하세요.</p>
+<h2>내용 변경</h2><p>통계 수집, 광고 서비스 또는 외부 기능이 추가되면 실제 적용되는 내용과 법적 요구사항에 맞춰 이 안내를 갱신합니다.</p>
+</div></Layout>
