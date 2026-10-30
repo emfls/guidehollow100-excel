@@ -22,8 +22,8 @@ const crumbsJson=JSON.stringify({'@context':'https://schema.org','@type':'Breadc
 {toc.length>1&&<nav class="contents-nav" aria-label="On this page"><strong>In this guide</strong><ul>{toc.map(h=><li><a href={'#'+h.slug}>{h.text}</a></li>)}</ul></nav>}
 
 <Content/>
-<Ad network="coupang" placement="article-after-guide"/>
+<Ad placement="article-after-guide"/>
 <h2>References</h2><ul class="source-links">{post.data.sources.map(url=><li><a href={url} target="_blank" rel="noopener noreferrer">{url}</a></li>)}</ul>
-<Ad network="adsense" placement="article-after-content"/>
+
 <hr/><p class="meta">Check software and device compatibility before making changes. <a href="/editorial/">Editorial policy</a>.</p><a href="/guides/">All guides</a></article><script type="application/ld+json" set:html={crumbsJson}/>
 </Layout>

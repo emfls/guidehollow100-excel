@@ -1,45 +1,32 @@
 {
   "adsense": {
     "enabled": false,
-    "client": "",
-    "slots": {
-      "home-after-topics": "",
-      "guides-bottom": "",
-      "article-after-intro": "",
-      "article-after-content": ""
-    }
+    "mode": "auto",
+    "client": ""
   },
   "coupang": {
-    "enabled": false,
+    "enabled": true,
     "dynamicBanners": {
       "home-after-topics": {
-        "enabled": false,
+        "enabled": true,
         "mode": "script",
-        "id": null,
-        "trackingCode": "",
+        "id": 1044908,
+        "trackingCode": "AF2560572",
         "template": "carousel",
-        "width": "100%",
-        "height": 180,
-        "iframeSrc": ""
-      },
-      "guides-bottom": {
-        "enabled": false,
-        "mode": "script",
-        "id": null,
-        "trackingCode": "",
-        "template": "carousel",
-        "width": "100%",
-        "height": 180,
+        "width": "680",
+        "height": "140",
+        "tsource": "",
         "iframeSrc": ""
       },
       "article-after-guide": {
-        "enabled": false,
+        "enabled": true,
         "mode": "script",
-        "id": null,
-        "trackingCode": "",
+        "id": 1044909,
+        "trackingCode": "AF2560572",
         "template": "carousel",
-        "width": "100%",
-        "height": 200,
+        "width": "680",
+        "height": "140",
+        "tsource": "",
         "iframeSrc": ""
       }
     }
