@@ -1,0 +1,6 @@
+---
+import Layout from '../layouts/Layout.astro';
+import site from '../site.json';
+---
+<Layout title={'About | '+site.title} description={site.description}>
+<div class="wrap content"><p class="eyebrow">ABOUT</p><h1>Practical help without the guesswork</h1><p><strong>{site.title}</strong> is an independent topic-focused GuideHollow 100 website.</p><p>{site.description}</p><p>Our guides focus on what to check first, risks of each action and how to confirm an issue is fixed.</p><h2>Not official support</h2><p>We are not affiliated with any software, platform or device manufacturer. Follow official sources and workplace policies for sensitive changes.</p></div></Layout>

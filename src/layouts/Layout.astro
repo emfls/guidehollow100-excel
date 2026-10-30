@@ -1,0 +1,18 @@
+---
+import site from '../site.json';
+import '../styles/base.css';
+const {title=site.title,description=site.description}=Astro.props;
+const canonical=new URL(Astro.url.pathname,site.url).href;
+---
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>{title}</title><meta name="description" content={description}/>
+<meta name="robots" content={site.launchReady?'index,follow':'noindex,nofollow'}/>
+<meta property="og:type" content="website"/><meta property="og:title" content={title}/><meta property="og:description" content={description}/>
+<link rel="canonical" href={canonical}/><link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+</head><body style={'--accent:'+site.accent}>
+<a href="#main" class="skip">Skip to content</a>
+<header><div class="wrap head"><a class="brand" href="/"><span class="logo">G</span>GuideHollow <strong>{site.short}</strong></a><nav aria-label="Main"><a href="/">Home</a><a href="/guides/">Guides</a><a href="/about/">About</a><a href="/editorial/">Editorial</a></nav></div></header>
+<main id="main"><slot/></main>
+<footer><div class="wrap"><strong>{site.title}</strong><p>Practical help. Checked before publication.</p><nav aria-label="Footer"><a href="/about/">About</a><a href="/editorial/">Editorial</a><a href="/privacy/">Privacy</a></nav><p class="small">© {new Date().getFullYear()} GuideHollow 100 · Not affiliated with manufacturers.</p></div></footer>
+</body></html>

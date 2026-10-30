@@ -1,0 +1,6 @@
+---
+import Layout from '../layouts/Layout.astro';
+import site from '../site.json';
+---
+<Layout title={'Editorial policy | '+site.title} description={'How '+site.title+' checks articles.'}>
+<div class="wrap content"><p class="eyebrow">EDITORIAL</p><h1>How we review technical guides</h1><h2>Primary sources</h2><p>Prefer official vendor documentation, and clearly identify version-specific requirements.</p><h2>Safe, testable steps</h2><p>Present low-risk checks first, and explain backups and consequences before resets or deletions.</p><h2>No invented testing</h2><p>Examples and expected outcomes are not described as physical tests unless verified.</p><h2>Publishing approval</h2><p>Articles remain unpublished until reviewed, explicitly undrafted and the website launch has been approved.</p><h2>Corrections and disclosure</h2><p>Correct outdated instructions and disclose future commercial relationships separately from factual recommendations.</p></div></Layout>

@@ -1,0 +1,18 @@
+{
+  "title": "GuideHollow Excel",
+  "slug": "excel",
+  "short": "Excel",
+  "hero": "Understand the formula. Trust the result.",
+  "description": "Practical Excel formulas, spreadsheet errors and data checking.",
+  "accent": "#128066",
+  "topics": [
+    "Formula errors",
+    "Lookups",
+    "Calculation",
+    "Data cleaning",
+    "Charts",
+    "Workbook checks"
+  ],
+  "url": "https://excel.guidehollow.com/",
+  "launchReady": false
+}
