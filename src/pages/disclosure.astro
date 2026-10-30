@@ -2,12 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import site from '../site.json';
 import ads from '../config/monetization.json';
+const live=site.launchReady&&ads.coupang.enabled&&Object.values(ads.coupang.dynamicBanners).some(b=>b.enabled);
 ---
 <Layout title={'Advertising disclosure | '+site.title} description={'Advertising and affiliate policy for '+site.title}>
 <div class="wrap content"><p class="eyebrow">TRANSPARENCY</p><h1>Advertising and affiliate disclosure</h1>
-<p>Reserved advertising placements do not mean ads are active. AdSense and Coupang Partners links are currently disabled.</p>
-{ads.coupang.enabled&&site.launchReady&&<p>Some links may be affiliate advertisements. We may earn a commission from qualifying purchases at no extra cost to you. Paid placements are clearly labelled.</p>}
-<h2>Independent editorial decisions</h2><p>Articles should answer questions accurately regardless of advertising. Affiliate product banners must be relevant to the page, verified and approved before they appear.</p>
-<h2>Ad placement rules</h2><p>Advertisements and sponsored links are kept separate from navigation, downloads and instructions. There is no encouragement to click advertising.</p>
-<h2>Data and privacy</h2><p>Third-party scripts remain disabled until configured, and the <a href="/privacy/">privacy notice</a> and consent requirements must be updated before activation.</p>
+{live?<p><strong>Affiliate advertisement:</strong> this website participates in Coupang Partners and receives a commission from qualifying purchases through Coupang dynamic banners. 이 사이트는 쿠팡 파트너스 활동의 일환으로 이에 따른 일정액의 수수료를 제공받습니다.</p>:<p>Coupang Partners dynamic banner placements have been prepared, but they are not active. Google AdSense is disabled until separately approved and configured.</p>}
+<h2>Independent editorial decisions</h2><p>Editorial answers are independent of monetization. Dynamic banners show products served by Coupang and are sponsored content, not verified individual product recommendations by this site.</p>
+<h2>Placement and labelling</h2><p>Sponsored banners are labelled advertisements and kept separate from navigation and troubleshooting instructions. Products are not selected or linked individually by this site.</p>
+<h2>Data and privacy</h2><p>External advertising scripts are not loaded while disabled. When enabled, Coupang may process information under its own privacy policies. Review our <a href="/privacy/">privacy notice</a> and applicable consent requirements before activation.</p>
 </div></Layout>

@@ -1,6 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import site from '../site.json';
+import ads from '../config/monetization.json';
+const live=site.launchReady&&ads.coupang.enabled&&Object.values(ads.coupang.dynamicBanners).some(b=>b.enabled);
 ---
 <Layout title={'Privacy | '+site.title} description={'Privacy information for '+site.title}>
-<div class="wrap content"><p class="eyebrow">PRIVACY</p><h1>Privacy notice</h1><p>Reviewed: 30 October 2026. The initial static site code contains no accounts or comment forms. AdSense and affiliate advertising remain disabled until explicitly configured, site approval, updated privacy disclosures, and any required consent mechanism are in place.</p><h2>Hosting and external links</h2><p>Hosting infrastructure may process technical request information for delivery and security. Official resources linked from articles have their own privacy practices.</p><h2>Updates</h2><p>The notice must be reviewed and updated before advertising, analytics, cookie-dependent services, external embeds or forms are enabled. See the advertising disclosure for further details.</p></div></Layout>
+<div class="wrap content"><p class="eyebrow">PRIVACY</p><h1>Privacy notice</h1>
+<p>Reviewed: 30 October 2026. This static information website has no user accounts or comment form.</p>
+<h2>Hosting and external links</h2><p>The host may process technical request data such as IP addresses, timestamps and request headers. External documentation websites have their own privacy notices.</p>
+<h2>Affiliate advertising</h2>
+{live?<p>Coupang Partners dynamic ads are configured. Third-party code may load recommended products and process information under Coupang's policies. Relevant cookie and consent requirements must be assessed for visitors before activation.</p>:<p>Coupang Partners dynamic banners and Google AdSense scripts are disabled until configured and the relevant privacy and consent requirements are completed.</p>}
+<p>Read our <a href="/disclosure/">advertising disclosure</a>.</p>
+<h2>Changes</h2><p>This policy must be revised if analytics, advertising, cookies, embeds or forms are introduced or changed.</p></div>
+</Layout>

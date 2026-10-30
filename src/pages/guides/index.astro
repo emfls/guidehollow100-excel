@@ -7,5 +7,5 @@ const posts=(await getCollection('guides',({data})=>site.launchReady&&!data.draf
 ---
 <Layout title={'Guides | '+site.title} description={'Reviewed guides for '+site.short}>
 <div class="wrap content"><p class="eyebrow">GUIDE LIBRARY</p><h1>Guides</h1><p>Only reviewed articles are listed here.</p>
-{posts.length?<ul class="list">{posts.map(p=><li><a href={'/guides/'+p.id+'/'}>{p.data.title}</a><p>{p.data.description}</p></li>)}</ul>:<div class="note">No reviewed articles published yet. Guides are being prepared.</div>}<Ad network="adsense" placement="guides-bottom"/>
+{posts.length?<ul class="list">{posts.map(p=><li><a href={'/guides/'+p.id+'/'}>{p.data.title}</a><p>{p.data.description}</p></li>)}</ul>:<div class="note">No reviewed articles published yet. Guides are being prepared.</div>}<Ad network="coupang" placement="guides-bottom"/><Ad network="adsense" placement="guides-bottom"/>
 </div></Layout>

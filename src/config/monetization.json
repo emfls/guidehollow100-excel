@@ -11,18 +11,36 @@
   },
   "coupang": {
     "enabled": false,
-    "banners": {
-      "home-after-guides": {
-        "approved": false,
-        "url": "",
-        "imageUrl": "",
-        "alt": ""
+    "dynamicBanners": {
+      "home-after-topics": {
+        "enabled": false,
+        "mode": "script",
+        "id": null,
+        "trackingCode": "",
+        "template": "carousel",
+        "width": "100%",
+        "height": 180,
+        "iframeSrc": ""
       },
-      "article-after-content": {
-        "approved": false,
-        "url": "",
-        "imageUrl": "",
-        "alt": ""
+      "guides-bottom": {
+        "enabled": false,
+        "mode": "script",
+        "id": null,
+        "trackingCode": "",
+        "template": "carousel",
+        "width": "100%",
+        "height": 180,
+        "iframeSrc": ""
+      },
+      "article-after-guide": {
+        "enabled": false,
+        "mode": "script",
+        "id": null,
+        "trackingCode": "",
+        "template": "carousel",
+        "width": "100%",
+        "height": 200,
+        "iframeSrc": ""
       }
     }
   }
