@@ -18,7 +18,7 @@ const crumbsJson=JSON.stringify({'@context':'https://schema.org','@type':'Breadc
 ]}).replace(/</g,'\\u003c');
 ---
 <Layout title={post.data.title+' | '+site.title} description={post.data.description} article={true} publishedAt={post.data.pubDate} updatedAt={post.data.updatedDate} sourceUrls={post.data.sources}>
-<article class="wrap content"><nav aria-label="Breadcrumb" class="breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/guides/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">{post.data.category}</span></nav><p class="eyebrow">{site.short} / {post.data.category}</p><h1>{post.data.title}</h1><p class="meta">Published {post.data.pubDate.toLocaleDateString('en-US')}</p><p class="lead">{post.data.description}</p>
+<article class="wrap content"><nav aria-label="Breadcrumb" class="breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/guides/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">{post.data.title}</span></nav><p class="eyebrow">{site.short} / {post.data.category}</p><h1>{post.data.title}</h1><p class="meta">Published {post.data.pubDate.toLocaleDateString('en-US')}</p><p class="lead">{post.data.description}</p>
 {toc.length>1&&<nav class="contents-nav" aria-label="On this page"><strong>In this guide</strong><ul>{toc.map(h=><li><a href={'#'+h.slug}>{h.text}</a></li>)}</ul></nav>}
 <Ad network="adsense" placement="article-after-intro"/>
 <Content/>
