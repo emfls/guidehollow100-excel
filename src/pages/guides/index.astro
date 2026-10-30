@@ -4,7 +4,7 @@ import site from '../../site.json';
 import {getCollection} from 'astro:content';
 const posts=(await getCollection('guides',({data})=>site.launchReady&&!data.draft&&data.reviewed&&data.language==='ko'&&data.sources.length>0)).sort((a,b)=>b.data.pubDate.valueOf()-a.data.pubDate.valueOf());
 ---
-<Layout title={site.short+' 가이드 모음 | GuideHollow'} description={site.description}>
+<Layout title={site.short+' 가이드 모음 | GuideHollow'} description={site.description} robots={posts.length?"index,follow":"noindex,follow"}>
 <div class="wrap content"><p class="eyebrow">GuideHollow / 가이드 모음</p><h1>{site.short} 가이드</h1><p>공식 자료와 확인 절차를 바탕으로 검수한 글만 모았습니다.</p>
 {posts.length?<ul class="list">{posts.map(p=><li><a href={'/guides/'+p.id+'/'}>{p.data.title}</a><p>{p.data.description}</p><p class="meta">{new Intl.DateTimeFormat('ko-KR',{dateStyle:'long',timeZone:'Asia/Seoul'}).format(p.data.pubDate)}</p></li>)}</ul>:<div class="note">현재 공개된 가이드가 없습니다. 검수 완료 후 이곳에서 확인할 수 있습니다.</div>}
 </div></Layout>

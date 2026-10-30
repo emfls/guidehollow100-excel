@@ -4,17 +4,18 @@ import ads from '../config/monetization.json';
 import '../styles/monetization.css';
 import '../styles/base.css';
 import '../styles/korean.css';
-const {title=site.pageTitle,description=site.description,article=false,publishedAt,updatedAt,sourceUrls=[]}=Astro.props;
+import '../styles/launch.css';
+const {title=site.pageTitle,description=site.description,article=false,publishedAt,updatedAt,sourceUrls=[],robots=site.launchReady?'index,follow,max-image-preview:large':'noindex,follow'}=Astro.props;
 const canonical=new URL(Astro.url.pathname,site.url).href;
 const org={'@type':'Organization',name:'GuideHollow',url:site.url};
 const schema=article?{'@context':'https://schema.org','@type':'BlogPosting',headline:title,description,inLanguage:'ko-KR',mainEntityOfPage:{'@type':'WebPage','@id':canonical},author:org,publisher:org,datePublished:publishedAt?.toISOString(),dateModified:(updatedAt||publishedAt)?.toISOString(),...(sourceUrls.length?{citation:sourceUrls}:{})}:{'@context':'https://schema.org','@type':'WebSite',name:'GuideHollow',url:site.url,description:site.description,inLanguage:'ko-KR',publisher:org};
 const schemaJson=JSON.stringify(schema).replace(/</g,'\\u003c');
-const loadAds=site.launchReady&&ads.adsense.mode==='auto'&&ads.adsense.enabled&&/^ca-pub-\d{16}$/.test(ads.adsense.client);
-const loadCoupang=site.launchReady&&ads.coupang.enabled&&Object.values(ads.coupang.dynamicBanners).some(b=>b.enabled&&b.mode==='script'&&Number.isSafeInteger(Number(b.id))&&Number(b.id)>0&&/^AF[A-Za-z0-9_-]{3,30}$/.test(String(b.trackingCode||'')));
+const loadAds=site.launchReady&&site.adsReady===true&&ads.adsense.mode==='auto'&&ads.adsense.enabled&&/^ca-pub-\d{16}$/.test(ads.adsense.client);
+const loadCoupang=site.launchReady&&site.adsReady===true&&ads.coupang.enabled&&Object.values(ads.coupang.dynamicBanners).some(b=>b.enabled&&b.mode==='script'&&Number.isSafeInteger(Number(b.id))&&Number(b.id)>0&&/^AF[A-Za-z0-9_-]{3,30}$/.test(String(b.trackingCode||'')));
 ---
 <!doctype html><html lang="ko"><head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>{title}</title><meta name="description" content={description}/><meta name="robots" content={site.launchReady?'index,follow,max-image-preview:large':'noindex,nofollow'}/>
+<title>{title}</title><meta name="description" content={description}/><meta name="robots" content={robots}/>
 <meta property="og:locale" content="ko_KR"/><meta property="og:type" content={article?'article':'website'}/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:site_name" content="GuideHollow"/><meta property="og:url" content={canonical}/>
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content={title}/><meta name="twitter:description" content={description}/>
 <link rel="canonical" href={canonical}/><link rel="icon" type="image/svg+xml" href="/favicon.svg"/>

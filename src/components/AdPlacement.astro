@@ -6,7 +6,7 @@ const banner=ads.coupang.dynamicBanners[placement];
 const id=Number(banner?.id);
 const trackingCode=String(banner?.trackingCode||'');
 const valid=Number.isSafeInteger(id)&&id>0&&/^AF[A-Za-z0-9_-]{3,30}$/.test(trackingCode);
-const show=site.launchReady&&ads.coupang.enabled&&banner?.enabled===true&&banner?.mode==='script'&&valid;
+const show=site.launchReady&&site.adsReady===true&&ads.coupang.enabled&&banner?.enabled===true&&banner?.mode==='script'&&valid;
 const options={id,template:banner?.template||'carousel',trackingCode,width:String(banner?.width||'680'),height:String(banner?.height||'140'),tsource:String(banner?.tsource||'')};
 const widgetCode='new PartnersCoupang.G('+JSON.stringify(options).replace(/</g,'\\u003c')+');';
 ---

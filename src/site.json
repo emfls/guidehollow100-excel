@@ -14,7 +14,8 @@
     "파일 검증·업무 활용"
   ],
   "url": "https://excel.guidehollow.com/",
-  "launchReady": false,
+  "launchReady": true,
   "section": "엑셀 함수·데이터 활용",
-  "pageTitle": "엑셀 함수·오류 해결 가이드 | GuideHollow"
+  "pageTitle": "엑셀 함수·오류 해결 가이드 | GuideHollow",
+  "adsReady": false
 }
