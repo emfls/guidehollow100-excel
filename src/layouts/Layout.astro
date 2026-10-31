@@ -14,6 +14,7 @@ const loadAds=site.launchReady&&site.adsReady===true&&ads.adsense.mode==='auto'&
 const loadCoupang=site.launchReady&&site.adsReady===true&&ads.coupang.enabled&&Object.values(ads.coupang.dynamicBanners).some(b=>b.enabled&&b.mode==='script'&&Number.isSafeInteger(Number(b.id))&&Number(b.id)>0&&/^AF[A-Za-z0-9_-]{3,30}$/.test(String(b.trackingCode||'')));
 ---
 <!doctype html><html lang="ko"><head>
+<meta name="naver-site-verification" content="7fc4d5f58d6715d200b1cfb1889048f95f1afb04" />
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>{title}</title><meta name="description" content={description}/><meta name="robots" content={robots}/>
 <meta property="og:locale" content="ko_KR"/><meta property="og:type" content={article?'article':'website'}/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:site_name" content="GuideHollow"/><meta property="og:url" content={canonical}/>
