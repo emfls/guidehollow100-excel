@@ -20,6 +20,8 @@ jobs:
           node-version: '22'
       - name: Install
         run: npm install --no-audit --no-fund
+      - name: Test CSV comparison
+        run: npm test
       - name: Build
         run: npm run build
       - uses: actions/upload-pages-artifact@v3
