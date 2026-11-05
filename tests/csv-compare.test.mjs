@@ -75,6 +75,13 @@ test('invalid amounts and blank keys never become matches and totals disclose re
   assert.equal(blank.summary.matched, 0);
 });
 
+test('oversized numeric cells are reviewed before expensive arbitrary precision conversion', () => {
+  const result = compare(`id,amount\nA,${'9'.repeat(100_000)}`, 'id,amount\nA,1');
+  assert.equal(result.rows[0].status, 'review');
+  assert.equal(result.summary.invalidAmounts, 1);
+  assert.equal(result.summary.leftTotal, '0.00');
+});
+
 test('key identity retains spaces and leading zeros and column names validate per file', () => {
   const result = compare('id,amount\n001,1\n A,2\nA,3', 'id,amount\n1,1\nA,3', false);
   assert.deepEqual(result.rows.map(row => row.status), ['missing', 'missing', 'matched', 'added']);

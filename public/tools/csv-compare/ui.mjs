@@ -62,7 +62,7 @@ function renderRows() {
   for (const row of rows.slice(0, 200)) {
     const tr = document.createElement('tr');
     for (const value of [labels[row.status], row.key || '(빈 번호)', row.leftRow ?? '—', row.rightRow ?? '—', displayMoney(row.leftAmount) || '—', displayMoney(row.rightAmount) || '—', displayMoney(row.difference) || '—', row.note]) {
-      const td = document.createElement('td'); td.textContent = String(value ?? ''); tr.append(td);
+      const td = document.createElement('td'); const text = String(value ?? ''); td.textContent = text.length > 160 ? text.slice(0, 160) + '… (전체 내용은 CSV에 저장)' : text; tr.append(td);
     }
     body.append(tr);
   }

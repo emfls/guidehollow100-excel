@@ -84,6 +84,8 @@ export function parseCSV(text) {
 
 function cents(value) {
   const text = value.trim();
+  // Bound BigInt work; the 64 characters include signs, commas, and the decimal point.
+  if (text.length > 64) return null;
   if (!/^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d{1,2})?$/.test(text)) return null;
   const [integer, fraction = ''] = text.replace(/,/g, '').replace(/^-/, '').split('.');
   const amount = BigInt(integer) * 100n + BigInt(fraction.padEnd(2, '0'));
@@ -138,7 +140,7 @@ export function reconcile({ left, right, leftKey, rightKey, leftAmount = null, r
     const reasons = [];
     if (!entry.key.trim()) reasons.push('비교 번호가 비어 있습니다.');
     if ((a.counts.get(entry.key) || 0) > 1 || (b.counts.get(entry.key) || 0) > 1) reasons.push('중복 번호: 같은 번호가 있는 모든 행을 개별 확인해 주세요.');
-    if (withAmounts && entry.amount === null) reasons.push('금액 형식 오류: 1234.56처럼 소수 둘째 자리까지 입력해 주세요.');
+    if (withAmounts && entry.amount === null) reasons.push('금액 형식 오류: 1234.56처럼 소수 둘째 자리까지, 부호·쉼표·소수점을 포함해 64자 이내로 입력해 주세요.');
     return reasons;
   }
 
