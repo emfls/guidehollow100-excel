@@ -1,0 +1,15 @@
+---
+const banner = {"href": "https://link.coupang.com/a/iqna58MNVs", "src": "https://ads-partners.coupang.com/banners/1046860?trackingCode=AF2560572&subId=&traceId=V0-301-879dd1202e5c73b2-I1046860&w=320&h=100", "alt": "쿠팡 쇼핑 제휴 광고 (새 탭)"};
+---
+<section class="wrap coupang-banner" aria-label="쿠팡 파트너스 제휴 광고">
+  <p>이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+  <a href={banner.href} target="_blank" rel="sponsored noopener" referrerpolicy="unsafe-url">
+    <img src={banner.src} alt={banner.alt} width="320" height="100" loading="lazy" decoding="async"/>
+  </a>
+</section>
+<style>
+  .coupang-banner { padding-block: 1.25rem; border-top: 1px solid #d9dfe6; }
+  .coupang-banner p { font-size: .875rem; line-height: 1.65; margin: 0 0 .75rem; }
+  .coupang-banner a { display: inline-block; max-width: 100%; }
+  .coupang-banner img { display: block; width: 320px; max-width: 100%; height: auto; }
+</style>
