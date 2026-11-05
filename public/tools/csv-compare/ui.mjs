@@ -1,8 +1,11 @@
 import { parseCSV, reconcile, resultsCSV } from './core.mjs';
+import { initMetrics, track } from './metrics.mjs';
 
 const $ = (id) => document.getElementById(id);
 const labels = { matched: '일치', missing: '비교 파일에 없음', added: '비교 파일에만 있음', amount_mismatch: '금액 다름', review: '직접 확인 필요' };
 const state = { left: null, right: null, leftName: '', rightName: '', result: null };
+const source = { left: null, right: null };
+const mode = () => source.left === 'sample' && source.right === 'sample' ? 'sample' : source.left === 'files' && source.right === 'files' ? 'files' : 'mixed';
 const revision = { left: 0, right: 0 };
 const samples = {
   left: '주문번호,금액\r\nA100,10000\r\nA200,20000\r\nA300,30000\r\nA400,40000\r\nA400,40000\r\n',
@@ -35,7 +38,7 @@ function setTable(side, table, name) {
 }
 for (const side of ['left', 'right']) {
   $(side + '-file').addEventListener('change', async (event) => {
-    const ticket = ++revision[side]; invalidate(); setTable(side, null, '');
+    const ticket = ++revision[side]; source[side] = null; invalidate(); setTable(side, null, '');
     const file = event.target.files[0]; if (!file) return;
     $(side + '-info').textContent = '파일을 읽고 있습니다…';
     try {
@@ -46,10 +49,13 @@ for (const side of ['left', 'right']) {
       catch { throw new Error('UTF-8로 읽을 수 없습니다. 엑셀에서 ‘CSV UTF-8(쉼표로 분리)’로 다시 저장해 주세요.'); }
       if (ticket !== revision[side]) return;
       setTable(side, parseCSV(text), file.name);
+      source[side] = 'files'; track('file_ready', { mode: mode() });
     } catch (error) {
       if (ticket !== revision[side]) return;
       setTable(side, null, ''); $(side + '-info').textContent = '파일을 읽지 못했습니다. 다른 파일을 선택해 주세요.';
       $(side + '-file').value = '';
+      const reason = /UTF-8/.test(error.message) ? 'encoding' : /5MB|5 MB|20,000|100개/.test(error.message) ? 'size' : /CSV 파일을 선택/.test(error.message) ? 'file_type' : 'csv_format';
+      track('tool_error', { stage: 'file', reason, mode: mode() });
       showError(`${side === 'left' ? '기준' : '비교'} 파일: ${error.message}`);
     }
   });
@@ -72,10 +78,11 @@ function compare() {
   invalidate();
   if (!state.left || !state.right) { showError('기준 파일과 비교 파일을 모두 선택해 주세요.'); return; }
   const leftAmount = $('left-amount').value || null, rightAmount = $('right-amount').value || null;
-  if (!!leftAmount !== !!rightAmount) { showError('금액을 비교하려면 양쪽의 금액 열을 모두 골라 주세요. 번호만 비교하려면 양쪽 모두 ‘금액 비교 안 함’으로 바꿔 주세요.'); return; }
+  if (!!leftAmount !== !!rightAmount) { track('tool_error', { stage: 'compare', reason: 'columns', mode: mode() }); showError('금액을 비교하려면 양쪽의 금액 열을 모두 골라 주세요. 번호만 비교하려면 양쪽 모두 ‘금액 비교 안 함’으로 바꿔 주세요.'); return; }
   try {
     state.result = reconcile({ left: state.left, right: state.right, leftKey: $('left-key').value, rightKey: $('right-key').value, leftAmount, rightAmount });
     const summary = state.result.summary;
+    track('compare_complete', { mode: mode(), has_review: summary.review > 0 });
     $('result-context').textContent = `기준: ${state.leftName} (${summary.leftCount}행) ↔ 비교: ${state.rightName} (${summary.rightCount}행)`;
     $('summary').replaceChildren();
     for (const [key, label] of [['matched', leftAmount ? '번호·금액 일치' : '번호 일치'], ['missing', labels.missing], ['added', labels.added], ['amountMismatch', labels.amount_mismatch], ['review', labels.review]]) {
@@ -85,23 +92,39 @@ function compare() {
     $('review-note').hidden = !summary.review;
     $('review-note').textContent = `직접 확인 필요 ${summary.review}건은 일치·누락으로 단정하지 않았습니다. 중복 번호는 양쪽 파일의 관련 행을 모두 표시합니다.${summary.invalidAmounts ? ` 잘못된 금액 ${summary.invalidAmounts}개는 합계에서 제외했습니다.` : ''}`;
     $('filter').value = 'differences'; $('results').hidden = false; renderRows(); $('results-title').focus();
-  } catch (error) { state.result = null; showError(error.message); }
+  } catch (error) { state.result = null; track('tool_error', { stage: 'compare', reason: 'other', mode: mode() }); showError(error.message); }
 }
 $('compare').addEventListener('click', compare);
 $('filter').addEventListener('change', () => { if (state.result) renderRows(); });
 $('sample').addEventListener('click', () => {
   invalidate();
-  for (const side of ['left', 'right']) { ++revision[side]; $(side + '-file').value = ''; setTable(side, parseCSV(samples[side]), side === 'left' ? '샘플 주문 목록' : '샘플 정산 내역'); }
+  for (const side of ['left', 'right']) { ++revision[side]; source[side] = 'sample'; $(side + '-file').value = ''; setTable(side, parseCSV(samples[side]), side === 'left' ? '샘플 주문 목록' : '샘플 정산 내역'); }
+  track('tool_sample', { mode: 'sample' });
   $('left-amount').value = '금액'; $('right-amount').value = '정산금액'; compare();
 });
 $('reset').addEventListener('click', () => {
   invalidate();
-  for (const side of ['left', 'right']) { ++revision[side]; $(side + '-file').value = ''; setTable(side, null, ''); }
+  for (const side of ['left', 'right']) { ++revision[side]; source[side] = null; $(side + '-file').value = ''; setTable(side, null, ''); }
   $('sample').focus();
 });
 $('download').addEventListener('click', () => {
   if (!state.result) return;
+  track('result_download', { mode: mode() });
   const url = URL.createObjectURL(new Blob([resultsCSV(state.result)], { type: 'text/csv;charset=utf-8' }));
   const anchor = document.createElement('a'); anchor.href = url; anchor.download = 'csv-비교-결과.csv'; document.body.append(anchor); anchor.click(); anchor.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 });
+
+const choice = $('metrics-choice');
+if (/^G-[A-Z0-9]+$/.test(choice?.dataset.measurementId || '')) {
+  choice.hidden = false;
+  initMetrics({ measurementId: choice.dataset.measurementId, qa: new URLSearchParams(location.search).get('qa') === '1' });
+}
+function updateFeedback() {
+  const label = $('feedback-reason').selectedOptions[0].textContent;
+  const body = `CSV 두 파일 비교 도구 의견\n선택: ${label}\n\n예상한 동작과 실제 동작을 적어 주세요.\n개인정보, 원본 파일, 실제 주문번호는 보내지 마세요.`;
+  $('feedback-mail').href = 'mailto:emfls24777@daum.net?subject=' + encodeURIComponent('CSV 비교 도구 의견') + '&body=' + encodeURIComponent(body);
+}
+$('feedback-reason').addEventListener('change', updateFeedback);
+$('feedback-mail').addEventListener('click', () => track('tool_feedback', { reason: $('feedback-reason').value, mode: mode() }));
+updateFeedback();

@@ -1,15 +1,20 @@
 ---
-const banner = {"href": "https://link.coupang.com/a/iqna58MNVs", "src": "https://ads-partners.coupang.com/banners/1046860?trackingCode=AF2560572&subId=&traceId=V0-301-879dd1202e5c73b2-I1046860&w=320&h=100", "alt": "쿠팡 쇼핑 제휴 광고 (새 탭)"};
+import site from '../site.json';
+const {placement='home'}=Astro.props;
+const widgets={"home": {"id": 1044908, "src": "https://ads-partners.coupang.com/widgets.html?id=1044908&template=carousel&trackingCode=AF2560572&width=100%25&height=200&tsource=", "height": 200}, "article": {"id": 1044909, "src": "https://ads-partners.coupang.com/widgets.html?id=1044909&template=carousel&trackingCode=AF2560572&width=100%25&height=200&tsource=", "height": 200}};
+const widget=widgets[placement==='article'?'article':'home'];
 ---
-<section class="wrap coupang-banner" aria-label="쿠팡 파트너스 제휴 광고">
-  <p>이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
-  <a href={banner.href} target="_blank" rel="sponsored noopener" referrerpolicy="unsafe-url">
-    <img src={banner.src} alt={banner.alt} width="320" height="100" loading="lazy" decoding="async"/>
-  </a>
-</section>
+{site.launchReady && site.coupangEnabled && <aside class="wrap coupang-banner" aria-label="쿠팡 파트너스 제휴 광고">
+  <p class="coupang-label">광고 · 쿠팡파트너스 추천 상품</p>
+  <p class="coupang-disclosure">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+  <iframe src={widget.src} title="쿠팡파트너스 추천 상품 광고" width="100%" height={widget.height} loading="lazy" referrerpolicy="strict-origin-when-cross-origin" scrolling="no"></iframe>
+  <p class="coupang-note">쿠팡이 제공하는 추천 상품 광고이며, 본문의 개별 상품 검증·추천을 의미하지 않습니다. <a href="/disclosure/">광고·제휴 안내</a></p>
+</aside>}
 <style>
-  .coupang-banner { padding-block: 1.25rem; border-top: 1px solid #d9dfe6; }
-  .coupang-banner p { font-size: .875rem; line-height: 1.65; margin: 0 0 .75rem; }
-  .coupang-banner a { display: inline-block; max-width: 100%; }
-  .coupang-banner img { display: block; width: 320px; max-width: 100%; height: auto; }
+  .coupang-banner { margin-block: 1.5rem; padding-block: 1rem; border-block: 1px solid #d9dfe6; }
+  .coupang-banner p { margin: 0 0 .65rem; line-height: 1.6; }
+  .coupang-label { font-size: .85rem; font-weight: 700; }
+  .coupang-disclosure { font-size: .875rem; }
+  .coupang-note { font-size: .8rem; }
+  .coupang-banner iframe { display: block; width: 100%; max-width: 100%; border: 0; margin-bottom: .65rem; }
 </style>
