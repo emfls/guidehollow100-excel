@@ -1,11 +1,12 @@
 ---
 import site from '../site.json';
+import CoupangBanner from '../components/CoupangBanner.astro';
 import ads from '../config/monetization.json';
 import '../styles/monetization.css';
 import '../styles/base.css';
 import '../styles/korean.css';
 import '../styles/launch.css';
-const {title=site.pageTitle,description=site.description,article=false,softwareApplication=false,publishedAt,updatedAt,sourceUrls=[],robots=site.launchReady?'index,follow,max-image-preview:large':'noindex,follow'}=Astro.props;
+const {coupangInPage=false,title=site.pageTitle,description=site.description,article=false,softwareApplication=false,publishedAt,updatedAt,sourceUrls=[],robots=site.launchReady?'index,follow,max-image-preview:large':'noindex,follow'}=Astro.props;
 const canonical=new URL(Astro.url.pathname,site.url).href;
 const org={'@type':'Organization',name:'GuideHollow',url:site.url};
 const schema=softwareApplication?{'@context':'https://schema.org','@type':'SoftwareApplication',name:'CSV comparison',url:canonical,description,applicationCategory:'BusinessApplication',operatingSystem:'Web browser',inLanguage:'ko-KR',isAccessibleForFree:true,offers:{'@type':'Offer',price:'0',priceCurrency:'KRW'}}:article?{'@context':'https://schema.org','@type':'BlogPosting',headline:title,description,inLanguage:'ko-KR',mainEntityOfPage:{'@type':'WebPage','@id':canonical},author:org,publisher:org,datePublished:publishedAt?.toISOString(),dateModified:(updatedAt||publishedAt)?.toISOString(),...(sourceUrls.length?{citation:sourceUrls}:{})}:{'@context':'https://schema.org','@type':'WebSite',name:'GuideHollow',url:site.url,description:site.description,inLanguage:'ko-KR',publisher:org};
@@ -31,6 +32,7 @@ const loadCoupang=site.launchReady&&site.adsReady===true&&ads.coupang.enabled&&O
 <header><div class="wrap head"><a class="brand" href="/" aria-label="GuideHollow 홈"><span class="logo" aria-hidden="true">G</span>GuideHollow</a>
 <nav aria-label="주요 메뉴"><a href="/">홈</a><a href="/tools/csv-compare/">CSV 비교</a><a href="/guides/">가이드</a><a href="/about/">소개</a><a href="/editorial/">편집 원칙</a></nav></div></header>
 <main id="main"><slot/></main>
+{!coupangInPage&&<CoupangBanner placement="article"/>}
 <footer><div class="wrap"><strong>GuideHollow</strong><p>필요한 정보를 쉽게 찾고, 안전하게 확인할 수 있도록 돕습니다.</p>
 <nav aria-label="하단 메뉴"><a href="/about/">사이트 소개</a><a href="/editorial/">편집 원칙</a><a href="/privacy/">개인정보 안내</a><a href="/disclosure/">광고·제휴 안내</a></nav>
 <p class="small">© {new Date().getFullYear()} GuideHollow · 각 서비스·제품 제조사의 공식 고객센터가 아닙니다.</p></div></footer>
