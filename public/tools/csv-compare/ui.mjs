@@ -22,7 +22,8 @@ function invalidate() { state.result = null; $('results').hidden = true; clearEr
 function readiness() {
   const ready = !!state.left && !!state.right;
   $('compare').disabled = !ready;
-  $('ready').textContent = ready ? '준비됐습니다. 번호 열을 확인하고 ‘차이 찾기’를 누르세요.' : '파일 두 개를 선택하면 비교할 수 있습니다.';
+  $('columns').hidden = !ready;
+  $('ready').textContent = ready ? '같은 번호가 있는 항목을 고른 뒤 ‘차이 찾기’를 누르세요.' : '파일 두 개를 선택하면 비교할 수 있습니다.';
 }
 function setTable(side, table, name) {
   state[side] = table; state[side + 'Name'] = name;
@@ -105,7 +106,7 @@ $('sample').addEventListener('click', () => {
 $('reset').addEventListener('click', () => {
   invalidate();
   for (const side of ['left', 'right']) { ++revision[side]; source[side] = null; $(side + '-file').value = ''; setTable(side, null, ''); }
-  $('sample').focus();
+  $('left-file').focus();
 });
 $('download').addEventListener('click', () => {
   if (!state.result) return;
